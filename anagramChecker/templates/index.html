@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+        <h1 class="card-title text-2xl">Check Anagrams</h1>
+        <p class="text-base-content/70 text-sm">
+            Enter two words or phrases below. Spaces, punctuation, and letter case are ignored.
+        </p>
+
+        <form method="post" action="{% url 'index' %}" class="space-y-4 mt-2">
+            {% csrf_token %}
+
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">{{ form.first.label }}</legend>
+                {{ form.first }}
+                {% for e in form.first.errors %}
+                <p class="text-error text-sm">{{ e }}</p>
+                {% endfor %}
+            </fieldset>
+
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">{{ form.second.label }}</legend>
+                {{ form.second }}
+                {% for e in form.second.errors %}
+                <p class="text-error text-sm">{{ e }}</p>
+                {% endfor %}
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary w-full">Check</button>
+        </form>
+
+        {% if result %}
+            {% if result.is_anagram %}
+            <div role="alert" class="alert alert-success mt-4">
+                <span>“{{ result.first }}” and “{{ result.second }}” are anagrams!</span>
+            </div>
+            {% else %}
+            <div role="alert" class="alert alert-error mt-4">
+                <span>“{{ result.first }}” and “{{ result.second }}” are not anagrams.</span>
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
