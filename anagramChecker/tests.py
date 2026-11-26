@@ -22,7 +22,7 @@ class AnagramViewTests(TestCase):
     """Tests for the anagramChecker index view."""
 
     def test_get_index(self):
-        response = self.client.get(reverse("anagramChecker:index"))
+        response = self.client.get(reverse("index"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "htmx.org")
         self.assertContains(response, "daisyui")
@@ -30,7 +30,7 @@ class AnagramViewTests(TestCase):
 
     def test_post_anagram_true(self):
         response = self.client.post(
-            reverse("anagramChecker:index"),
+            reverse("index"),
             {"first": "listen", "second": "silent"},
         )
         self.assertEqual(response.status_code, 200)
@@ -38,7 +38,7 @@ class AnagramViewTests(TestCase):
 
     def test_post_anagram_false(self):
         response = self.client.post(
-            reverse("anagramChecker:index"),
+            reverse("index"),
             {"first": "hello", "second": "world"},
         )
         self.assertEqual(response.status_code, 200)
@@ -46,7 +46,7 @@ class AnagramViewTests(TestCase):
 
     def test_post_empty_first(self):
         response = self.client.post(
-            reverse("anagramChecker:index"),
+            reverse("index"),
             {"first": "", "second": "silent"},
         )
         self.assertEqual(response.status_code, 200)
